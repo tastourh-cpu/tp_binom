@@ -18,22 +18,52 @@ def show_total():
 
 def main():
     while True:
-        print("\n,==== SUIVI DES DEPENSES ====")
-        print("1. Ajoute une depense")
-        print("2. Afficher les depense")
-        print("3. Afficher le totale")
+        print("\n==== SUIVI DES DEPENSES ====")
+        print("1. Ajouter une depense")
+        print("2. Afficher les depenses")
+        print("3. Afficher le total")
         print("4. Quitter")
-        choice = input("votre choix :")
+        print("5. Delete")
+
+        choice = input("votre choix : ").strip()
+
         if choice == "1":
             add_expense()
         elif choice == "2":
             show_expense()
         elif choice == "3":
             show_total()
+        elif choice == "5":
+            delete_expense()
         elif choice == "4":
             print("Au revoir !")
             break
         else:
             print("Choix invalide.")
-    if __name__ == "  __main__  ":
-        main()
+
+
+if __name__ == "__main__":
+    main()
+
+
+def delete_expense():
+    if not expenses:
+        print("No expenses to delete.")
+        return
+
+    for number, expense in enumerate(expenses, start=1):
+        print(f"{number}. {expense['description']}")
+
+    choice = input("Expense number to delete: ").strip()
+
+    if not choice.isdigit():
+        print("Invalid expense number.")
+        return
+
+    index = int(choice) - 1
+
+    if 0 <= index < len(expenses):
+        removed = expenses.pop(index)
+        print(f"Deleted: {removed['description']}")
+    else:
+        print("Invalid expense number.")
